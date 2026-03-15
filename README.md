@@ -135,4 +135,4 @@ Esto iniciará la versión de escritorio del juego.
 
 Proyecto desarrollado como práctica de **programación de videojuegos con LibGDX**.
 
-Autor: **[Rodrigo Garcia Heredia]**
+Autor: **Rodrigo Garcia Heredia**
