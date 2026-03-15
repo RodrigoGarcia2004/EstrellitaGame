@@ -1,108 +1,83 @@
 # ⭐ ESTRELLA GAME
 
-## 📖 DESCRIPCIÓN
+## 📖 INTRODUCCIÓN
 
-**Estrella Game** es un videojuego desarrollado en **Java utilizando el framework LibGDX**.  
-El objetivo del juego es controlar un cubo que debe **recoger estrellas que caen desde la parte superior de la pantalla**, evitando trampas y gestionando el tiempo para conseguir la mayor puntuación posible.
+**Nombre del juego:** Estrella Game  
 
-El juego incluye distintos tipos de estrellas, power-ups, niveles progresivos y un sistema de puntuación máxima.
+**Temática:**  
+El juego presenta un **cubo** como personaje principal que debe moverse horizontalmente para **recoger estrellas que caen desde la parte superior de la pantalla**. Hay distintos tipos de estrellas y objetos:
 
-https://youtu.be/ojkNyRVs0ik
+- ⭐ Estrella normal: suma puntos.
+- 🌟 Superestrella: suma más puntos que la normal.
+- ☄️ Estrella mala / meteorito: resta puntos.
+- 🟢 Estrella verde (Power-Up): activa un bonus temporal que aumenta el tamaño del cubo.
+- ⚠️ Trampa: termina la partida inmediatamente.
 
----
-
-# 🎮 MECÁNICA DEL JUEGO
-
-El jugador controla un **cubo** que se mueve horizontalmente por la pantalla para recoger estrellas que caen desde arriba.
-
-Durante la partida aparecen diferentes tipos de objetos:
-
-## ⭐ Tipos de objetos
-
-- ⭐ **Estrella normal**  
-  Suma 1 punto.
-
-- 🌟 **Superestrella**  
-  Suma más puntos que una estrella normal.
-
-- ☄️ **Estrella mala / meteorito**  
-  Resta puntos al jugador.
-
-- 🟢 **Estrella verde (Power-Up)**  
-  Activa un bonus temporal que aumenta el tamaño del cubo y facilita recoger estrellas.
-
-- ⚠️ **Trampa**  
-  Termina la partida inmediatamente.
+**Objetivo:**  
+Recolectar la mayor cantidad de estrellas posible antes de que termine el tiempo, evitando trampas y gestionando correctamente los power-ups.
 
 ---
 
-# 📈 SISTEMA DE PROGRESIÓN
+# ⚙️ DESARROLLO
 
-El juego aumenta la dificultad progresivamente mediante:
+## Lógica del juego
 
-- Incremento de **velocidad de caída de las estrellas**
-- Reducción del **tiempo entre apariciones**
-- Sistema de **niveles**
-- **Modo contrarreloj**
+El juego utiliza **LibGDX** para gestionar la lógica y el renderizado:
 
-Cada cierto número de estrellas recogidas el jugador sube de nivel, lo que hace que el juego sea más rápido y desafiante.
+- **Movimiento del cubo:**  
+  El cubo se mueve mediante **teclas izquierda/derecha** o **toques en pantalla**, ajustando su posición X.
 
----
+- **Colisiones:**  
+  Cada estrella tiene un `Rectangle` para su posición y tamaño. Se verifica la colisión con el cubo mediante `overlaps()`. Según el tipo de estrella, se suma o resta puntos, se activa un power-up o se termina el juego.
 
-# 🎯 OBJETIVO DEL JUEGO
+- **Power-ups y temporizadores:**  
+  Algunos objetos activan efectos temporales (por ejemplo, agrandar el cubo). Se manejan mediante variables `powerUpActivo` y `powerUpTimer`.
 
-El objetivo es **recoger la mayor cantidad de estrellas posible antes de que el tiempo termine**, evitando trampas y gestionando correctamente los power-ups.
+- **Dificultad progresiva:**  
+  A medida que el jugador recoge estrellas, aumenta el nivel, incrementando la velocidad de caída y reduciendo el tiempo entre apariciones.
 
-Además, el juego guarda la **puntuación máxima (HighScore)** del jugador.
+- **Sistema de puntuación:**  
+  Se guarda el **HighScore** usando `Preferences` de LibGDX.
 
----
-
-# 🕹 CONTROLES
-
-## Teclado
-
-| Acción | Control |
-|------|------|
-| Mover cubo | Flecha izquierda / derecha |
-| Pausar juego | ESC |
-| Continuar tras Game Over | Tocar pantalla |
-
-## Pantalla táctil
-
-- Tocar la pantalla para mover el cubo a la posición deseada.
+- **Audio:**  
+  Se reproducen efectos de sonido al recoger estrellas y música de fondo en bucle.
 
 ---
 
-# ⚙️ TECNOLOGÍAS UTILIZADAS
+## Estructura del juego
 
-- **Java**
-- **LibGDX**
-- Sistema de audio de LibGDX
-- Preferencias de LibGDX para guardar puntuaciones
-- Sprites y colisiones mediante Rectangles
+### Clases principales:
 
----
+- **Estrella.java**: clase principal del juego.
+- **MainScreen.java**: pantalla de inicio y navegación.
+- **GameScreen.java**: lógica principal del juego, manejo de sprites, audio y colisiones.
+- **EstrellaCaida (clase interna en GameScreen)**: representa cada estrella que cae.
 
-# 📂 ESTRUCTURA DEL PROYECTO
+### Pantallas:
 
-```
-core/
- └─ src/com/bdc/drop/io
-      ├─ Estrella.java
-      ├─ MainScreen.java
-      └─ GameScreen.java
+- **Pantalla de juego (`GameScreen`)**: donde se desarrolla toda la acción y mecánica.
+- **Pantalla principal / menú (`MainScreen`)**: inicio del juego y reinicio tras Game Over.
 
-assets/
- ├─ imágenes
- ├─ sonidos
- └─ música
-```
+### Assets:
+
+- Imágenes: cubo, estrellas, meteoritos.
+- Sonidos: música de fondo y efectos al recoger estrellas.
+- Los archivos se cargan desde la carpeta `assets`.
 
 ---
 
-# 🚀 CÓMO EJECUTAR EL PROYECTO
+# 📝 CONCLUSIONES
 
-1. Clonar el repositorio
+- La **representación lógica** (rectángulos para colisiones, posiciones X/Y de objetos) permite detectar interacciones sin depender de la representación gráfica exacta.  
+- La **representación gráfica** (sprites, texturas) proporciona la visualización, pero se maneja de manera separada de la lógica para facilitar el control y las colisiones.
+- LibGDX facilita la separación entre **lógica del juego y renderizado**, lo que permite manejar física, colisiones y temporizadores sin que afecte directamente al dibujo de los objetos en pantalla.
+- Aprendizaje clave: la organización del juego en **clases y pantallas** simplifica la escalabilidad, manejo de estados (Running, Paused, Game Over) y reutilización de código para futuros proyectos.
+
+---
+
+# 🚀 EJECUCIÓN
+
+1. Clonar el repositorio:
 
 ```
 git clone https://github.com/tuusuario/estrella-game.git
@@ -110,31 +85,11 @@ git clone https://github.com/tuusuario/estrella-game.git
 
 2. Abrir el proyecto en **IntelliJ IDEA** o **Eclipse**.
 
-3. Ejecutar la clase:
-
-```
-DesktopLauncher
-```
-
-Esto iniciará la versión de escritorio del juego.
-
----
-
-# 💾 FUNCIONALIDADES IMPLEMENTADAS
-
-- Sistema de **niveles**
-- **Aumento progresivo de dificultad**
-- **Modo contrarreloj**
-- **Power-ups temporales**
-- **Sistema de pausa**
-- **Game Over**
-- **Sistema de HighScore**
-- **Efectos de sonido y música de fondo**
+3. Ejecutar la clase **DesktopLauncher** para iniciar el juego.
 
 ---
 
 # 👨‍💻 AUTOR
 
-Proyecto desarrollado como práctica de **programación de videojuegos con LibGDX**.
-
-Autor: **Rodrigo Garcia Heredia**
+**Rodrigo García Heredia**  
+Proyecto desarrollado como práctica de programación de videojuegos con LibGDX.
