@@ -7,6 +7,8 @@ El objetivo del juego es controlar un cubo que debe **recoger estrellas que caen
 
 El juego incluye distintos tipos de estrellas, power-ups, niveles progresivos y un sistema de puntuación máxima.
 
+https://youtu.be/ojkNyRVs0ik
+
 ---
 
 # 🎮 MECÁNICA DEL JUEGO
